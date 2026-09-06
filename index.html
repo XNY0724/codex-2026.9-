@@ -1,30 +1,248 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f7fb">
-  <title>Codex Windows 安装指南</title>
-  <meta name="description" content="面向 Windows 用户的 Codex 安装与配置分步指南。">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f7fb">
+<title>Codex Windows 安装指南</title>
+<meta name="description" content="面向 Windows 用户的 Codex 安装与配置分步指南。">
+<style>:root {
+  --bg: #f5f7fb;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+  --ink: #172033;
+  --muted: #647087;
+  --line: #e3e8f1;
+  --accent: #2563eb;
+  --accent-dark: #1747aa;
+  --accent-soft: #eaf1ff;
+  --mint: #11a683;
+  --warning: #9a5b00;
+  --warning-bg: #fff7e5;
+  --shadow: 0 18px 52px rgba(25, 45, 85, 0.10);
+  --radius-lg: 24px;
+  --radius-md: 14px;
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body { background: var(--bg); }
+button, a { font: inherit; }
+button { cursor: pointer; }
+
+.app-shell { min-height: 100vh; background: radial-gradient(circle at 88% 0%, #e9f2ff 0, transparent 32rem), var(--bg); }
+.topbar { height: 72px; display: flex; align-items: center; justify-content: space-between; max-width: 1240px; margin: 0 auto; padding: 0 30px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+.brand-mark { display: grid; place-items: center; width: 30px; height: 30px; color: #fff; border-radius: 9px; background: var(--accent); box-shadow: 0 7px 18px rgba(37,99,235,.28); font-size: 16px; letter-spacing: 0; }
+.topbar-meta { display: flex; align-items: center; gap: 14px; }
+.platform-pill { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(17,166,131,.12); }
+.icon-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: var(--surface-strong); transition: .2s ease; }
+.icon-button:hover { color: var(--accent); border-color: #bed0f8; transform: translateY(-1px); }
+
+.main { max-width: 1240px; margin: 0 auto; padding: 20px 30px 118px; outline: none; }
+.welcome { min-height: calc(100vh - 140px); display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(360px, .88fr); align-items: center; gap: 70px; padding: 32px 0 80px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 22px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); }
+h1, h2, h3, p { margin-top: 0; }
+h1 { max-width: 650px; margin-bottom: 22px; font-size: clamp(42px, 5vw, 74px); line-height: 1.05; letter-spacing: -.03em; }
+.lead { max-width: 600px; margin-bottom: 28px; color: var(--muted); font-size: 18px; line-height: 1.9; }
+.welcome-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+.meta-chip { padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.68); font-size: 12px; font-weight: 700; }
+.welcome-visual { position: relative; min-height: 410px; display: grid; place-items: center; }
+.visual-panel { position: relative; width: min(100%, 480px); aspect-ratio: 1 / 1; border: 1px solid rgba(37,99,235,.14); border-radius: 38px; background: linear-gradient(145deg, #eef4ff, #fff); box-shadow: var(--shadow); overflow: hidden; }
+.visual-panel::before, .visual-panel::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(37,99,235,.16); }
+.visual-panel::before { width: 370px; height: 370px; left: 48px; top: 34px; }
+.visual-panel::after { width: 250px; height: 250px; left: 108px; top: 94px; }
+.visual-core { position: absolute; left: 50%; top: 50%; width: 172px; height: 172px; transform: translate(-50%,-50%); display: grid; place-items: center; border-radius: 34px; color: #fff; background: var(--accent); box-shadow: 0 24px 42px rgba(37,99,235,.32); font-size: 70px; font-weight: 800; }
+.visual-label { position: absolute; right: 28px; bottom: 24px; z-index: 1; padding: 10px 13px; border: 1px solid rgba(255,255,255,.7); border-radius: 10px; color: var(--muted); background: rgba(255,255,255,.8); backdrop-filter: blur(8px); font-size: 12px; font-weight: 700; }
+
+.step-layout { padding-top: 10px; }
+.progress-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.progress-copy { color: var(--muted); font-size: 13px; font-weight: 700; }
+.progress-copy strong { color: var(--ink); }
+.progress-track { flex: 1; max-width: 460px; height: 7px; overflow: hidden; border-radius: 999px; background: #e5eaf3; }
+.progress-value { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #5d8df2); transition: width .35s ease; }
+.step-nav { display: flex; gap: 8px; margin-bottom: 30px; overflow-x: auto; scrollbar-width: none; }
+.step-nav::-webkit-scrollbar { display: none; }
+.step-dot { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.65); font-size: 12px; font-weight: 700; }
+.step-dot.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.step-dot.done { border-color: #bfe5da; color: #087d64; background: #effbf7; }
+.step-dot-num { display: grid; place-items: center; width: 19px; height: 19px; border-radius: 50%; background: currentColor; color: #fff; font-size: 10px; }
+.step-dot.done .step-dot-num { font-size: 0; }
+.step-dot.done .step-dot-num::after { content: "✓"; font-size: 11px; }
+
+.step-card { display: grid; grid-template-columns: 1fr; gap: 0; min-height: 560px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+.step-aside { display: flex; flex-direction: column; justify-content: space-between; padding: 38px 34px; background: linear-gradient(155deg, #edf4ff 0%, #f8fbff 64%, #effaf7 100%); }
+.step-index { display: inline-flex; align-items: center; gap: 9px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .13em; }
+.step-index::before { content: ""; width: 24px; height: 2px; background: var(--accent); }
+.step-aside h1, .step-aside h2 { margin: 18px 0 12px; font-size: 32px; line-height: 1.18; letter-spacing: -.02em; }
+.step-aside p { color: var(--muted); line-height: 1.8; }
+.aside-note { padding-top: 22px; border-top: 1px solid rgba(100,112,135,.18); color: var(--muted); font-size: 12px; line-height: 1.7; }
+.step-content { padding: 38px 42px 116px; }
+.step-content h3 { margin-bottom: 12px; font-size: 20px; }
+.step-content p, .step-content li { color: #4c586d; font-size: 15px; line-height: 1.9; }
+.step-content ul, .step-content ol { margin: 10px 0 20px; padding-left: 1.25em; }
+.step-content li + li { margin-top: 6px; }
+.muted-block { margin: 18px 0; padding: 14px 16px; border-left: 3px solid #9fb7ec; color: var(--muted); background: #f7f9fd; font-size: 14px; line-height: 1.8; }
+.text-step-box { margin: 18px 0 22px; padding: 18px 20px; border: 1px solid #cbd9f7; border-radius: 14px; background: #f5f8ff; box-shadow: 0 8px 20px rgba(25,45,85,.05); }
+.text-step-box h3 { margin-bottom: 7px; color: var(--ink); font-size: 18px; }
+.text-step-box p { margin-bottom: 0; color: var(--muted); }
+.warning-block { margin: 20px 0; padding: 15px 17px; border: 1px solid #f0d9a8; border-radius: 12px; color: var(--warning); background: var(--warning-bg); font-size: 14px; line-height: 1.8; }
+.media-row { display: grid; grid-template-columns: minmax(190px, .62fr) minmax(0, 1fr); align-items: start; gap: 22px; margin: 18px 0 24px; }
+.media-stack { display: grid; gap: 24px; margin: 22px 0 26px; }
+.media-item { margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-strong); box-shadow: 0 8px 22px rgba(25,45,85,.06); }
+.media-item img { display:block; width:100%; height:auto; max-height: 520px; object-fit:contain; border-radius: 9px; background:#f7f9fd; }
+.media-item figcaption { display:flex; flex-direction:column; gap:5px; padding:12px 3px 0; color:var(--muted); font-size:13px; line-height:1.65; }
+.media-item figcaption strong { color:var(--ink); font-size:16px; }
+.branch-page { padding: 8px 0; }
+.external-link { display:flex; flex-direction:column; gap:4px; min-width:0; color:var(--accent-dark); text-decoration:none; }
+.external-link small { overflow-wrap:anywhere; color:var(--muted); font-size:12px; font-weight:500; }
+.progress-head { display:flex; justify-content:space-between; margin-bottom:9px; color:var(--muted); font-size:13px; font-weight:700; }
+.step-dot { cursor:pointer; }
+.media-frame { margin: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.media-frame img { display: block; width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 8px; }
+.media-frame figcaption { padding: 8px 3px 2px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.media-copy { min-width: 0; }
+.media-copy p:last-child { margin-bottom: 0; }
+.link-block { position: relative; display: flex; align-items: center; gap: 10px; margin: 18px 0; padding: 13px 58px 13px 14px; border: 1px solid #cbd9f7; border-radius: 12px; background: #f5f8ff; }
+.link-block a { min-width: 0; overflow-wrap: anywhere; color: var(--accent-dark); font-size: 13px; font-weight: 700; text-decoration: none; transition: transform .2s ease, color .2s ease; }
+.link-block a::after { content: " ↗"; }
+.link-block a:hover { position: relative; z-index: 1; color: var(--accent); transform: scale(1.025); text-shadow: 0 0 16px rgba(37,99,235,.42); }
+.link-block a:hover::before { content: ""; position: absolute; inset: -9px -14px; z-index: -1; border-radius: 12px; background: radial-gradient(circle, rgba(84,146,255,.22), transparent 66%); filter: blur(4px); }
+.copy-link { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 1px solid #c2d2f3; border-radius: 9px; color: var(--accent); background: #fff; font-size: 16px; transition: .2s ease; }
+.copy-link:hover { border-color: var(--accent); box-shadow: 0 6px 16px rgba(37,99,235,.16); transform: translateY(-50%) scale(1.05); }
+.branch-heading { margin: 22px 0 10px; color: var(--ink); font-size: 16px; font-weight: 800; }
+.branch-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin: 16px 0 22px; }
+.branch-option { position: relative; min-height: 122px; padding: 17px; border: 1px solid var(--line); border-radius: 14px; text-align: left; color: var(--ink); background: var(--surface-strong); transition: .2s ease; }
+.branch-option:hover { border-color: #a9c0f4; box-shadow: 0 10px 24px rgba(37,99,235,.10); transform: translateY(-2px); }
+.branch-option.selected { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 3px rgba(37,99,235,.11); }
+.branch-option strong { display: block; margin-bottom: 7px; font-size: 15px; }
+.branch-option span { display: block; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.branch-option::after { content: ""; position: absolute; right: 14px; top: 15px; width: 8px; height: 8px; border: 2px solid #bdc7d8; border-radius: 50%; }
+.branch-option.selected::after { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+.branch-detail { display: none; margin-top: 4px; padding: 16px; border-radius: 12px; background: #f7f9fd; }
+.branch-detail.visible { display: block; animation: appear .25s ease; }
+.branch-detail h4 { margin: 0 0 7px; font-size: 14px; }
+.branch-detail p { margin-bottom: 0; font-size: 14px; }
+@keyframes appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.nav-dock { position: fixed; right: max(24px, calc((100vw - 1240px) / 2 + 30px)); bottom: 24px; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid rgba(219,226,239,.96); border-radius: 16px; background: rgba(255,255,255,.88); box-shadow: 0 12px 34px rgba(21,38,72,.16); backdrop-filter: blur(14px); }
+.nav-button { min-height: 44px; padding: 0 17px; border: 0; border-radius: 10px; color: var(--muted); background: transparent; font-size: 13px; font-weight: 800; transition: .2s ease; }
+.nav-button:hover:not(:disabled) { color: var(--ink); background: #f1f4f9; }
+.nav-button:disabled { opacity: .4; cursor: not-allowed; }
+.nav-button.primary { min-width: 116px; color: #fff; background: var(--accent); box-shadow: 0 8px 18px rgba(37,99,235,.25); }
+.nav-button.primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.nav-button.primary.complete { background: var(--mint); }
+.toast { position: fixed; left: 50%; bottom: 28px; z-index: 10; transform: translate(-50%, 18px); padding: 10px 15px; border: 1px solid #bfe5da; border-radius: 10px; color: #087d64; background: #effbf7; box-shadow: 0 10px 25px rgba(17,166,131,.14); font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none; transition: .25s ease; }
+.toast.visible { transform: translate(-50%, 0); opacity: 1; }
+
+@media (max-width: 850px) {
+  .topbar { padding: 0 18px; }
+  .main { padding: 10px 18px 112px; }
+  .welcome { min-height: auto; grid-template-columns: 1fr; gap: 35px; padding: 45px 0 55px; }
+  h1 { font-size: clamp(40px, 12vw, 60px); }
+  .lead { font-size: 16px; }
+  .welcome-visual { min-height: 310px; order: -1; }
+  .visual-panel { width: min(100%, 360px); }
+  .visual-core { width: 130px; height: 130px; font-size: 54px; }
+  .visual-panel::before { width: 280px; height: 280px; left: 40px; top: 15px; }
+  .visual-panel::after { width: 190px; height: 190px; left: 85px; top: 60px; }
+  .progress-row { align-items: flex-start; flex-direction: column; }
+  .progress-track { width: 100%; max-width: none; }
+  .step-card { grid-template-columns: 1fr; }
+  .step-aside { padding: 28px 25px; }
+  .step-aside h1, .step-aside h2 { font-size: 28px; }
+  .step-content { padding: 28px 25px 112px; }
+  .media-row { grid-template-columns: 1fr; gap: 14px; }
+  .media-item img { max-height: 360px; }
+  .media-frame img { max-height: 310px; }
+  .branch-grid { grid-template-columns: 1fr; }
+  .nav-dock { right: 14px; bottom: 14px; left: 14px; justify-content: space-between; }
+  .nav-button.primary { flex: 1; }
+}
+
+@media (max-width: 520px) {
+  .topbar { height: 62px; }
+  .topbar-meta .platform-pill { display: none; }
+  .main { padding: 8px 12px 104px; }
+  .welcome { gap: 22px; padding: 28px 0 38px; }
+  .welcome-visual { min-height: 250px; }
+  .visual-panel { width: min(100%, 280px); border-radius: 24px; }
+  .visual-core { width: 104px; height: 104px; border-radius: 24px; font-size: 44px; }
+  .visual-panel::before { width: 220px; height: 220px; left: 30px; top: 15px; }
+  .visual-panel::after { width: 150px; height: 150px; left: 65px; top: 50px; }
+  .visual-label { right: 14px; bottom: 14px; font-size: 10px; }
+  .step-nav { margin-bottom: 18px; }
+  .step-dot { min-height: 40px; padding: 0 11px; }
+  .step-aside { padding: 22px 18px; }
+  .step-aside h1, .step-aside h2 { font-size: 25px; }
+  .step-content { padding: 22px 18px 104px; }
+  .step-content p, .step-content li { font-size: 14px; }
+  .media-item { padding: 10px; }
+  .media-item img { max-height: none; }
+  .link-block { padding: 12px 52px 12px 12px; }
+  .nav-dock { gap: 6px; padding: 6px; }
+  .nav-button { min-height: 46px; padding: 0 12px; font-size: 12px; }
+  .nav-button.primary { min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+body.dark { --bg: #101522; --surface: rgba(22, 30, 47, .94); --surface-strong: #171f31; --ink: #edf2ff; --muted: #9ba8bf; --line: #2b3850; --accent-soft: #1e3159; --warning-bg: #332817; --warning: #f3c77a; --shadow: 0 18px 52px rgba(0,0,0,.26); }
+body.dark .app-shell { background: radial-gradient(circle at 88% 0%, #18294b 0, transparent 32rem), var(--bg); }
+body.dark .step-aside { background: linear-gradient(155deg, #182949, #172234 70%, #14362f); }
+body.dark .muted-block, body.dark .branch-detail { background: #121a2a; }
+body.dark .text-step-box { border-color: #334a7b; background: #17243e; }
+body.dark .media-frame, body.dark .link-block, body.dark .nav-dock, body.dark .icon-button, body.dark .meta-chip { background: var(--surface-strong); }
+body.dark .link-block { border-color: #334a7b; }
+</style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="#" data-action="home" aria-label="回到指南首页">
-        <span class="brand-mark">C</span>
-        <span>CODEX GUIDE</span>
-      </a>
-      <div class="topbar-meta">
-        <span class="platform-pill"><span class="status-dot"></span> Windows 配置</span>
-        <button class="icon-button" type="button" data-action="toggle-theme" aria-label="切换显示模式" title="切换显示模式">◐</button>
-      </div>
-    </header>
-
-    <main id="app" class="main" tabindex="-1"></main>
-
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  </div>
-  <script src="app.js"></script>
+<div class="app-shell">
+<header class="topbar">
+<a class="brand" href="#" data-action="home" aria-label="回到指南首页"><span class="brand-mark">C</span><span>CODEX GUIDE</span></a>
+<div class="topbar-meta"><span class="platform-pill"><span class="status-dot"></span> Windows 配置</span><button class="icon-button" type="button" data-action="toggle-theme" aria-label="切换显示模式" title="切换显示模式">◐</button></div>
+</header>
+<main id="app" class="main" tabindex="-1"></main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+<script>const REGISTER_URL = "https://mojie.app/register?aff=U4tPktul";
+const CODEX_SERVICE_URL = "https://tonecho.xyz/register?aff=9PPNTWSTRL7B";
+const baseSteps = [
+  { id:"vpn", title:"配置 VPN", short:"VPN", summary:"准备稳定的网络环境", note:"先完成网络配置，再进行下载和注册。", body:()=>`<p>使用魔戒 App 完成注册并进入服务页面。点击下方链接（链接可以点击跳转，也可以复制）</p>${linkBlock(REGISTER_URL,"魔戒注册链接")}<div class="media-stack">${media("image1.png","下载客户端","找到 Windows 客户端并下载。")}${media("image2.png","选择一个订阅套餐","按自己的使用强度选择套餐。")}${media("image8.png","VPN的启用","点击使用文档—&gt;Windows教程，根据教程配置")}</div>` },
+  { id:"network", title:"连接网络", short:"网络", summary:"打开全局网络配置", note:"电话号码国家应与 VPN 所在国家一致。（电话号码后面会用到）", body:()=>`<div class="media-stack">${media("image3.png","通过客户端改变 IP","优先选择美国或加拿大线路。")}${media("image4.png","使用 VPN 的配置","打开系统代理、虚拟网卡，出站模式设为全局。")}</div><ol><li>确认网络速度有正常波动。</li><li>检查加速器中间的网络检测是否显示新的 IP。</li></ol>` },
+  { id:"download", title:"下载 Codex", short:"下载", summary:"选择一个下载路径", note:"两种下载方式对应不同的版本维护方式。", branch:"download", body:()=>`<p>ChatGPT 与 Codex 已合并在同一个系统中，请选择下载方式：</p>${branchOptions("download",[["legacy","仓库安装包","稳定性优先，适合需要旧版 ChatGPT 的用户。"],["store","Microsoft Store","最新版并自动更新，适合希望保持最新功能的用户。"]])}` },
+  { id:"account", title:"注册账号", short:"账号", summary:"使用电话号码完成注册", note:"电话号码必须与 VPN 所在国家一致，VPN 保持全局模式。", body:()=>`<p>因为无论使用哪种下载方式，使用 Codex 最终都需要绑定电话号码。</p>${linkBlock(CODEX_SERVICE_URL,"通客注册服务")}<div class="text-step-box"><h3>打开通客服务</h3><p>进入服务页面并登录。</p></div><div class="media-stack">${media("image5.png","获取短信接收号码","点击“通客自助接码”，按页面提示操作。")}</div><div class="callout">注册时选择的电话号码国家要与 VPN 所在国家一致。</div>` },
+  { id:"subscription", title:"选择订阅方式", short:"订阅", summary:"选择 API 或官方套餐", note:"选择适合自己的订阅方式。", branch:"subscription", body:()=>`<p>根据使用频率和预算选择一条订阅路径：</p>${branchOptions("subscription",[["api","API 方案","先配置 CC switch，再获取 API 并选择模型分组。"],["official","官方套餐","购买官方 Plus 或 Pro 套餐，并按页面提示开通。"]])}<div id="subscription-guidance">${subscriptionGuidance(selections.subscription)}</div>` }
+];
+const branchSteps = {
+  legacy:[{id:"legacy-install",title:"安装仓库版本",short:"安装包",summary:"下载并安装仓库中的旧版程序",note:"旧版相对稳定，但只能使用 GPT-5.6。",body:()=>`<div class="branch-page"><h3>请下载仓库中的安装包</h3><p>在你的 GitHub 仓库中找到安装文件，下载后按 Windows 安装向导完成安装。</p><div class="callout">安装完成后返回此页面，点击下一步。</div></div>`}],
+  store:[{id:"store-install",title:"安装 Store 版本",short:"Store",summary:"从 Microsoft Store 安装最新版",note:"Store 版本会自动更新。",body:()=>`<div class="branch-page"><h3>打开 Microsoft Store</h3><p>搜索“GPT”或“Codex”，选择官方应用并完成安装，随后回到此页面。</p></div>`}],
+};
+function subscriptionGuidance(selection){
+  if(selection==="api") return `<div class="branch-guidance"><h3>API 方案指导</h3><div class="text-step-box"><h3>配置 CC switch</h3><p>下载 CC switch，通过网页按照指引完成环境配置。</p></div><p>获取 API：API 相当于带有个人信息认证的账户，调用模型会从对应账户直接扣费，不用订阅官方套餐。</p><div class="media-stack">${media("image7.png","选择模型分组","倍率越高，单个 token 的成本越高，作者建议 Pro 组通常已经够用。")}</div><div class="warning-block">使用 API 前核对价格、倍率、额度和扣费主体，不要公开 API key。</div><div class="warning-block">使用API可能会导致使用的模型降智，请谨慎考虑购买方案。</div></div>`;
+  if(selection==="official") return `<div class="branch-guidance"><h3>官方套餐指导</h3><p>购买官方 Plus 或 Pro 套餐，进入页面中的开通入口，按页面提示完成购买和开通。</p><div class="media-stack">${media("image2.png","进入购买订阅","在服务页面的“购买订阅”入口选择套餐。")}</div><div class="warning-block">套餐名称、金额、账单周期、退款规则和优惠以实际结算页为准。</div></div>`;
+  return "";
+}
+function media(src,title,text){return `<figure class="media-item"><img src="assets/${src}" alt="${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${text}</span></figcaption></figure>`}
+function linkBlock(url,label){return `<div class="link-block"><a href="${url}" target="_blank" rel="noopener noreferrer" class="external-link">${label}<small>${url}</small></a><button class="copy-link" type="button" data-copy="${encodeURIComponent(url)}" title="复制链接" aria-label="复制链接">⧉</button></div>`}
+function branchOptions(group,opts){return `<div class="branch-grid" data-branch-group="${group}">${opts.map(([id,title,desc])=>`<button class="branch-option" type="button" data-branch="${id}" aria-pressed="false"><strong>${title}</strong><span>${desc}</span></button>`).join("")}</div>`}
+let current=Number.parseInt(localStorage.getItem("codex-guide-step")||"-1",10);let selections={};try{selections=JSON.parse(localStorage.getItem("codex-guide-branches")||"{}")}catch{selections={}}if(!Number.isInteger(current))current=-1;
+const app=document.querySelector("#app"),toast=document.querySelector("#toast");
+function flow(){return [...baseSteps.slice(0,3),...(selections.download?branchSteps[selections.download]:[]),...baseSteps.slice(3)]}
+function render(){if(current<0)return welcome();const steps=flow();if(current>=steps.length)current=steps.length-1;const step=steps[current],percent=Math.round((current+1)/steps.length*100);app.innerHTML=`<section class="step-layout"><div class="progress-head"><span>第 <b>${current+1}</b> / ${steps.length} 步</span><b>${percent}%</b></div><div class="progress-track"><div class="progress-value" style="width:${percent}%"></div></div><nav class="step-nav" aria-label="步骤导航">${steps.map((item,i)=>`<button class="step-dot ${i===current?"active":""} ${i<current?"done":""}" type="button" data-jump="${i}"><i>${i<current?"✓":i+1}</i>${item.short}</button>`).join("")}</nav><article class="step-card"><aside class="step-aside"><span class="step-index">STEP ${String(current+1).padStart(2,"0")}</span><h1>${step.title}</h1><p>${step.summary}</p><p class="aside-note">${step.note}</p></aside><div class="step-content">${step.body()}</div></article><div class="nav-dock"><button class="nav-button" type="button" data-action="prev" ${current===0?"disabled":""}>← 上一步</button><button class="nav-button primary" type="button" data-action="next">${current===steps.length-1?"完成指南":"下一步 →"}</button></div></section>`;syncBranches();window.scrollTo({top:0,behavior:"smooth"})}
+function welcome(){app.innerHTML=`<section class="welcome"><div><span class="eyebrow">STEP BY STEP · WINDOWS</span><h1>Codex<br><span>安装指南</span></h1><p class="lead">从网络配置、软件下载到账号注册和订阅选择，按当前路径完成每一步。</p><div class="welcome-meta"><span>图文说明</span><span>分支路径</span><span>移动端适配</span></div></div><div class="welcome-visual"><div class="visual-panel"><div class="visual-core">C</div><span class="visual-label">Windows setup flow</span></div></div><div class="nav-dock"><button class="nav-button primary" type="button" data-action="start">开始指南 →</button></div></section>`}
+function syncBranches(){document.querySelectorAll("[data-branch-group]").forEach(group=>{const selected=selections[group.dataset.branchGroup];group.querySelectorAll("[data-branch]").forEach(btn=>{const on=btn.dataset.branch===selected;btn.classList.toggle("selected",on);btn.setAttribute("aria-pressed",String(on))});if(group.dataset.branchGroup==="subscription"){const guidance=document.querySelector("#subscription-guidance");if(guidance)guidance.innerHTML=subscriptionGuidance(selected)}})}
+function save(){localStorage.setItem("codex-guide-branches",JSON.stringify(selections));localStorage.setItem("codex-guide-step",String(current))}
+function showToast(msg){toast.textContent=msg;toast.classList.add("visible");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("visible"),2200)}
+async function copyLink(value){try{await navigator.clipboard.writeText(decodeURIComponent(value));showToast("链接已复制")}catch{showToast("复制失败，请手动复制")}}
+document.addEventListener("click",event=>{const target=event.target.closest("button");if(!target)return;const action=target.dataset.action;if(action==="toggle-theme"){document.body.classList.toggle("dark");localStorage.setItem("codex-guide-theme",document.body.classList.contains("dark")?"dark":"light");return}if(action==="start"){current=0;save();render()}else if(action==="prev"){current=Math.max(0,current-1);save();render()}else if(action==="next"){const step=flow()[current];if(step.branch&&!selections[step.branch])return showToast("请先选择一条路径");if(current>=flow().length-1){showToast("指南已完成");current=-1;localStorage.removeItem("codex-guide-step");render()}else{current++;save();render()}}else if(target.dataset.jump){current=Number(target.dataset.jump);save();render()}else if(target.dataset.copy)copyLink(target.dataset.copy);const branch=target.closest("[data-branch]");if(branch){selections[branch.closest("[data-branch-group]").dataset.branchGroup]=branch.dataset.branch;save();syncBranches()}});if(localStorage.getItem("codex-guide-theme")==="dark")document.body.classList.add("dark");render();
+</script>
 </body>
 </html>

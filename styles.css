@@ -157,6 +157,31 @@ h1 { max-width: 650px; margin-bottom: 22px; font-size: clamp(42px, 5vw, 74px); l
   .nav-button.primary { flex: 1; }
 }
 
+@media (max-width: 520px) {
+  .topbar { height: 62px; }
+  .topbar-meta .platform-pill { display: none; }
+  .main { padding: 8px 12px 104px; }
+  .welcome { gap: 22px; padding: 28px 0 38px; }
+  .welcome-visual { min-height: 250px; }
+  .visual-panel { width: min(100%, 280px); border-radius: 24px; }
+  .visual-core { width: 104px; height: 104px; border-radius: 24px; font-size: 44px; }
+  .visual-panel::before { width: 220px; height: 220px; left: 30px; top: 15px; }
+  .visual-panel::after { width: 150px; height: 150px; left: 65px; top: 50px; }
+  .visual-label { right: 14px; bottom: 14px; font-size: 10px; }
+  .step-nav { margin-bottom: 18px; }
+  .step-dot { min-height: 40px; padding: 0 11px; }
+  .step-aside { padding: 22px 18px; }
+  .step-aside h1, .step-aside h2 { font-size: 25px; }
+  .step-content { padding: 22px 18px 104px; }
+  .step-content p, .step-content li { font-size: 14px; }
+  .media-item { padding: 10px; }
+  .media-item img { max-height: none; }
+  .link-block { padding: 12px 52px 12px 12px; }
+  .nav-dock { gap: 6px; padding: 6px; }
+  .nav-button { min-height: 46px; padding: 0 12px; font-size: 12px; }
+  .nav-button.primary { min-width: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
